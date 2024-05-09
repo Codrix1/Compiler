@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const  Textarea = () => {
-    let word , arraysize , counterstate;
     const [text, setText] = useState('');
     const [Variable , setVariable] = useState("");
     const [Identifiers , setIdentifiers] = useState("");
@@ -26,6 +25,19 @@ const  Textarea = () => {
       word="";
       arraysize = 0;
       counterstate = false;
+      const checkRepitition = (substring) =>
+        {
+          
+        }
+      const checkSymbols =(word)=>{
+        switch(word){
+          case "&&":
+          case "||":
+            return true;
+          default:
+            return false;
+          }
+      }
       const checkIdentifier = (word) =>
         {
           switch(word){
@@ -58,22 +70,25 @@ const  Textarea = () => {
       const check =(word)=>
         {
           if(checkIdentifier(word)){
-            setIdentifiers((prevIdentifiers) => prevIdentifiers + word + " , ");
+            setIdentifiers((prevIdentifiers) => prevIdentifiers + " \u02F9" +word + "\u02FA  ,");
           }
           else if (checkReservedWords(word)){
-            setReserved_Words((prevReserved_Words) => prevReserved_Words + word + " , ");
+            setReserved_Words((prevReserved_Words) => prevReserved_Words + " \u02F9" + word + "\u02FA  ,");
+          }
+          else if(checkSymbols(word)){
+            setSymbols((prevSymbols) => prevSymbols + " \u02F9" + word + "\u02FA  ,"); 
           }
           else if (isNaN(word)) {
-            setVariable((prevVariable) => prevVariable + word + " , ");
+            setVariable((prevVariable) => prevVariable + " \u02F9" + word + "\u02FA  ,");
           }
           else{
-            setNumbers((prevNumber) => prevNumber + word + " , ");
+            setNumbers((prevNumber) => prevNumber + " \u02F9" +word + "\u02FA  ,");
           }
         }
       const addarray = (word , arraysize) =>{
-        setArrays((prevArray)=>prevArray + word + " [" + arraysize.toString() + "] , " );
+        setArrays((prevArray)=>prevArray + " \u02F9" + word + " [" + arraysize.toString() + "]\u02FA , " );
       }  
- 
+      
       const letters = textareaRef.current.value.split('')      
       letters.forEach((letter) => {
         switch(letter){ 
@@ -86,13 +101,11 @@ const  Textarea = () => {
           case "{" :
           case "}" :
           case ";" :
-          case "&&" :
-          case "||" :
           case "<" :  
           case ">" :  
           case "=" :
           case "!" :  
-            setSymbols((prevSymbols) => prevSymbols +letter+" , ");
+            setSymbols((prevSymbols) => prevSymbols + " \u02F9" + letter + "\u02FA  ,"); 
             if(word !== "" && !counterstate){
               check(word);
               word=""; }
@@ -105,7 +118,7 @@ const  Textarea = () => {
               word=""; }
             break;
           case "[":
-            if( !checkIdentifier(word) && !checkReservedWords(word) && (isNaN(word) || word=="")){
+            if( !checkIdentifier(word) && !checkReservedWords(word) && !checkSymbols(word) && (isNaN(word) || word=="")){
                 arraysize =1;
                 counterstate = true;
             }
@@ -118,6 +131,7 @@ const  Textarea = () => {
               }
             break
           case ",":
+            setSymbols((prevSymbols) => prevSymbols + " \u02F9" + letter + "\u02FA  ,"); 
             if(counterstate){
               arraysize +=1;
             }
@@ -146,7 +160,10 @@ const  Textarea = () => {
         }
       if(Numbers!==""){
           setNumbers((prevNumbers) => prevNumbers.substring(0, prevNumbers.length - 3) );
-        }     
+        }
+      if(Arrays!==""){
+          setArrays((prevArrays) => prevArrays.substring(0, prevArrays.length - 3) );
+        }       
       },
         [text])
 
