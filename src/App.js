@@ -14,14 +14,7 @@ const App = () => {
           <Textarea />
         </div>
         
-        <div className="phase_II containers">
-          
-        </div>
         
-        <div className="phase_III containers">
-            
-        </div>
-      
       </div>
       
       
