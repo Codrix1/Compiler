@@ -500,16 +500,7 @@ const  Textarea = () => {
           }
           console.log("current" + Elements[i])
           console.log(intialized_vars)
-          for(a = i ; a >= 0 ; a --)
-            {
-              if(!checkIdentifier(Elements[a]) &&  !checkReservedWords(Elements[a]) &&  !checkSymbols(Elements[a]) && isNaN(Elements[a]) && Elements[a]!=";"){
-                if (!intialized_vars.includes(Elements[a])){
-                  
-                  console.log("c  " + Elements[a])
-                  setErrors((prevErrors) =>  prevErrors + "\u2800" + "\u2800" + "variable  "+ Elements[i] + " not identified")
-                }
-              }
-            }
+          
         }
         if(sqct > 0)
         {
